@@ -1,0 +1,103 @@
+<!DOCTYPE html>
+<html lang="it">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Teatro del Surreale</title>
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    body {
+      background-color: #000;
+      font-family: 'Courier New', Courier, monospace;
+      overflow: hidden;
+    }
+
+    #overlay {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100vw;
+      height: 100vh;
+      background-color: #000;
+      color: white;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      font-size: 2em;
+      z-index: 10;
+      text-align: center;
+      cursor: pointer;
+    }
+
+    #main-content {
+      display: none;
+      width: 100vw;
+      height: 100vh;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+    }
+
+    img {
+      width: 80vw;
+      max-width: 800px;
+      border: none;
+      border-radius: 10px;
+    }
+
+    audio {
+      display: none;
+    }
+  </style>
+</head>
+<body>
+
+  <div id="overlay">Vuoi andare davvero avanti?</div>
+
+  <div id="main-content">
+    <a href="https://google.com">
+<img id="main-image"  src="paura.png" alt="immagine iniziale"/>
+    </a>
+    <audio id="suono" src="audio distorto.mp3" autoplay></audio>
+  </div>
+
+  <script>
+    const overlay = document.getElementById('overlay');
+    const main = document.getElementById('main-content');
+    const img = document.getElementById('main-image');
+    const audio = document.getElementById('suono');
+
+    const giàVista = localStorage.getItem('immagineVista');
+
+    overlay.addEventListener('click', () => {
+      overlay.style.display = 'none';
+      main.style.display = 'flex';
+
+      if (giàVista) {
+        img.src = 'placeholder.png';
+      } else {
+        audio.play();
+        setTimeout(() => {
+          img.src = 'placeholder.png';
+          audio.pause();
+          audio.remove();
+          localStorage.setItem('immagineVista', 'true');
+        }, 700);
+      }
+    });
+
+    // se già vista, salta direttamente la domanda
+    if (giàVista) {
+      overlay.style.display = 'none';
+      main.style.display = 'flex';
+      img.src = 'placeholder.png';
+    }
+  </script>
+
+</body>
+</html>
